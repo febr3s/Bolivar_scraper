@@ -1,8 +1,7 @@
 import scrapy
-from datetime import datetime
 
-class DocumentSpiderRDFReady(scrapy.Spider):
-    name = 'document_spider_rdf_ready'
+class DocumentSpider8Fields(scrapy.Spider):
+    name = 'document_spider_8fields'
     
     custom_settings = {
         'USER_AGENT': 'AcademicResearchBot/1.0 (contact: eduardofebresm@gmail.com)',
@@ -18,21 +17,22 @@ class DocumentSpiderRDFReady(scrapy.Spider):
         # Field 1: Title
         title = response.css('div.float-left h1::text').get()
         
-        # Fields 2-5: Using the same pattern
+        # Fields 2-5, 8: Using the same pattern
         fields = {
             'field_2_seccion': 'Sección',
             'field_3_personas': 'Personas', 
             'field_4_lugares': 'Lugares',
             'field_5_palabras_clave': 'Palabras Clave',
+            'field_8_traduccion': 'Traducción'
         }
         
         result = {
             'url': response.url,
-            'scraped_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),  # Updated with timestamp
+            'scraped_at': '2024-01-01',
             'field_1_title': title.strip() if title else None,
         }
         
-        # Extract fields 2-5 using the same method
+        # Extract fields 2-5 and 8 using the same method
         for field_key, field_label in fields.items():
             field_data = response.css(f'p:contains("{field_label}") ::text').getall()
             result[field_key] = self.clean_field_content(field_data, field_label)
