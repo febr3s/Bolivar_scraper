@@ -1,0 +1,82 @@
+1. Done. 2. Scrapy it is. 3. Of course.
+
+Let's start by something simple. Let's extract one targeted content from this page: https://www.archivodellibertador.gob.ve/archlib/web/index.php/site/documento?id=1
+
+Look at this webpage html, and find the markup I will paste bellow. In the markup that I am pasting, there are html comments stating "Field 1", "Field 2", etc. Let's create a minimal scrapy program to extract what is marked as Field 1.
+
+<div class="card-body" style="padding: 5%">                
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <b><h1><!--Field 1 (title)-->DOCUMENTO 1 CARTA DIRIGIDA DESDE VERACRUZ A SU TÍO PEDRO PALACIOS BLANCO, QUIEN SE HALLABA EN CARACAS. LE REFIERE SU VISITA A LA CIUDAD DE MÉXICO, EN EL CURSO DE SU VIAJE A ESPAÑA.*</h1></b>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="mt-3 float-right">
+                                <p class="mb-2"><strong><!--Field 2-->Sección</strong> <br>1) Período (20MAR 1799 AL 23DIC 1824) Correspondencia Personal (E.L.)</p>
+                                
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-6">
+                            <div class="mt-3 float-right">
+                                <p class="mb-2"><strong><!--Field 3-->Personas</strong> <br></p>
+                                
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-6">
+                            <div class="mt-3 float-right">
+                                <p class="mb-2"><strong><!--Field 4-->Lugares</strong> <br></p>
+                                
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-6">
+                            <div class="mt-3 float-right">
+                                <p class="mb-2"><strong><!--Field 5-->Palabras Clave</strong> <br></p>
+                                
+                            </div>
+                        </div><!-- end col -->
+                       
+                    <!-- end row -->                       
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="">
+                                                        <div class="col-md-12">
+                                    <div id="w0" class="carousel slide" data-bs-ride="carousel">
+<div class="carousel-indicators"><button type="button" class="active" data-bs-target="#w0" data-bs-slide-to="0" aria-current="true"></button></div>
+<div class="carousel-inner"><div class="carousel-item active"><img class="d-block w-50 image" src="/upload/imagen/articulo/MjAyMy0xMS0yOA==-articulo_cursoesequibo.jpg" alt="MjAyMy0xMS0yOA==-articulo_cursoesequibo.jpg">
+</div></div>
+<button type="button" class="carousel-control-prev" data-bs-target="#w0" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
+<button type="button" class="carousel-control-next" data-bs-target="#w0" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
+</div>
+                                    </div>
+                                                    
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mt-3 float-left">
+                            <p class="mb-2"><strong><!--Field 6-->Descripción: </strong>  <br>{Veracruz, 20 de marzo de (17)99.}  
+<br><!--Field 7: content-->A Pedro Palacios Blanco]
+<br>Estimado tío mío: 
+<br>Mi llegada a este puerto ha sido felismente, gracias a Dios: pero nos hemos detenido aquí con el motibo de haber estado bloqueada la Abana, y ser presiso el pasar por allí; de sinco nabíos y once fragatas ingleses[ <a href="#1"> 1 </a>]. Después de haber gastado catorce días en la nabegasión, entramos en dicho puerto el día dos de febrero con toda felicidad. Hoi me han susedido tre cosas que me an complasido mucho: la primera es el aber sabida q.e salía un barco para Maracaibo y q.e por este condudto podía escribir a usted mi situasión, y partisiparle mi biaje que ise a México en la inteligencia que usted con el Obispo lo habían tratado, pues me allé haquí una carta para su sobrino el Oidor de allí recomendándome a él, siempre q.e hubiese alguna detención, la cual lo acredita esa que le entregará usted al Obispo que le manda su sobrino el Oidor, que fue en donde bibí los ocho días que estube en dicha ciudad. Don Pedro Miguel de Hecheberría costeó el biaje, q.e fueron cuatro­cientos pesos poco más o meno, de lo cual determinará usted, si se los paga aquí o allá a Don Juan Esteban de Hechesuría q.e es compañero de este Sr. a quien bine rrecomendado por Hechesuría, y siendo el condudto el Obispo. Hoi a las onse de la mañana llegué de México y nos bamos a la tarde para España y pienso que tocare­mos en la Abana porque ya se quitó el bloqueo que estaba en ese puerto, y por esta razón a sido el tiempo mui corto para haserme más largo. Vsted no estrañe la mala letra pues ya lo hago media­namente pues estoi fatigado del mobimiento del coche en q.e hacabo de llegar, y por ser mui a la ligera[ <a href="#2"> 2 </a>] la he puesto mui mala y me ocuren todas las espesies de un golpe. Espresiones a mis ermanos y en paticular a Juan Visente q.e ya lo estoi esperando, a mi amigo Don Manuel de Matos y en fin a todos a quien yo estimo.
+<br>        <br>  Su más atento serbidor y su yjo.
+<br>        <br>  SIMÓN   BOLÍVAR.
+<br>        <br>  Yo me dessenbarq.e en la casa de Don José Donato de Austrea el marío de la[ <a href="#3"> 3 </a>] Basterra quien me mandó recado en cuanto llegué aquí me fuese a su casa y con mucha instancia y me daba por razón que no havía fonda en este puerto.
+<br>        <br>  * De un facsímil del original, reproducido por el Dr. Vicente Lecuna en “Cartas del Libertador corregidas conforme a los originales. Mandadas publicar por el Gobierno de Venezuela presidido por el General J. V. Gómez, tomo I, 1799-1817”, Caracas, Lit. y Tip. del Comercio, 1929, entre las páginas 4 y 5. Una nota advierte que el facsímil es de tamaño natural. La Comisión Editora no ha tenido a la vista el original que, según afirma el Dr. Lecuna en la obra citada, pertenecía al señor Rafael Palacios (Intro­ducción, p. xiii).
+<br>        <br> Esta carta es totalmente autógrafa. Si bien es cierto que su ortografía se aparta bastante de la usual entre las personas cultas de la época, no debe olvidarse que para entonces aún no se habían fijado normas sobre la materia por parte de la Real Academia de la Lengua. Una lectura atenta del facsímil permite apreciar que Bolívar empezó a corregir la carta, pero que sólo llegó hasta la mitad de la primera llana: donde había escrito ""onse"" puso ""once"", superponiendo una c a la s; lo mismo hizo con ""catorse"", que fue corregido ""catorce"", y donde había escrito primero ""dentramos"", suprimió con enérgicos trazos la (d) inicial, para dejar ""entramos"".
+<br>        <br> El destinatario, Pedro Palacios Blanco (1769, 1811), tío materno de Simón Bolívar, se hallaba entonces en Caracas y se preparaba a viajar a España para reunirse allí con su hermano Esteban y su sobrino Simón. Según una costumbre bastante extendida en esa época, se firmaba Palacios y Sojo, con los dos apellidos de la rama paterna. Bolívar le escribía desde el puerto mexicano de Veracruz, en donde había desembarcado el 2 de febrero de 1799 y, luego de una permanencia de algo más de un mes en la capital del Virreinato, había vuelto a aquel puerto el mismo día en que está fechada la carta. Se sabe que el buque había fondeado el día 1 de febrero.<br><br><b><!--Field 8-->NOTAS</b> <br><br> 1) <a id="1" =="">En anteriores publicaciones se había transcrito siempre: ""inglecas"", pero es claro que Bolívar modificó la penúltima letra, transformándola en una (e) por lo cual debe leerse ""ingleces"". <br>2) </a><a id="2" =="">Testado: ""pues ya me boi a enbarcar"". <br>3) </a><a id="3" =="">Una palabra tachada ilegible. <br></a></p><a id="3" =="">
+                            
+                        </a></div><a id="3" =="">
+                    </a></div><!-- end col --><a id="3" =="">
+                    <div class="col-12">
+                        <div class="mt-3 float-right">
+                            <p class="mb-2"><strong><!--Field 9-->Traducción</strong> <br></p>
+                            
+                        </div>
+                    </div><!-- end col -->
+                </a></div><a id="3" =="">
+            </a></div>
